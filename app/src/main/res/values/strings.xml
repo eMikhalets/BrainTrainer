@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">BrainTrainer</string>
+
+    <string name="menu.text.label">Тренажер для счета в уме</string>
+    <string name="menu.text.chose_difficult">Выберите сложность</string>
+    <string name="menu.text.add">Сложение</string>
+    <string name="menu.text.add_subs">Сложение и вычитание</string>
+    <string name="menu.text.add_subs_mult_div">Сложение, вычитание, умножение и деление</string>
+    <string name="menu.text.chose_operation">Выберите операцию</string>
+    <string name="menu.btn.level_1">Уровень 1</string>
+    <string name="menu.btn.level_2">Уровень 2</string>
+    <string name="menu.btn.level_3">Уровень 3</string>
+    <string name="menu.btn.begin_operation">Начать</string>
+
+    <string name="game.text.answers">
+        <font fgcolor='#FFFF3B30'>%d</font> / <font fgcolor='#FFFF3B30'>%d</font>
+    </string>
+    <string name="game.text.timer">%s:%s</string>
+    <string name="game.text.example">%s %s %s</string>
+    <string name="end_game.text.game_over">Игра окончена</string>
+    <string name="end_game.text.right_answers">Правильных ответов: %s</string>
+    <string name="end_game.btn.return_menu">Вернуться в меню</string>
+    <string name="end_game.btn.exit">Выйти из игры</string>
 </resources>

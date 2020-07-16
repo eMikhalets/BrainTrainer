@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="operations">
+        <item>Сложение</item>
+        <item>Вычитание</item>
+        <item>Умножение</item>
+        <item>Деление</item>
+    </string-array>
+</resources>

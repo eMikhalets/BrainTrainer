@@ -1,6 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="40dp"
+        android:text="@string/menu.text.label"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_chose_difficult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/menu.text.chose_difficult"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_label" />
+
+    <TextView
+        android:id="@+id/text_level_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/menu.text.add"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/text_chose_difficult"
+        app:layout_constraintTop_toBottomOf="@+id/text_chose_difficult" />
+
+    <Button
+        android:id="@+id/btn_level_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/menu.btn.level_1"
+        app:layout_constraintStart_toStartOf="@+id/text_level_1"
+        app:layout_constraintTop_toBottomOf="@+id/text_level_1" />
+
+    <TextView
+        android:id="@+id/text_level_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/menu.text.add_subs"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/btn_level_1"
+        app:layout_constraintTop_toBottomOf="@+id/btn_level_1" />
+
+    <Button
+        android:id="@+id/btn_level_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/menu.btn.level_2"
+        app:layout_constraintStart_toStartOf="@+id/text_level_2"
+        app:layout_constraintTop_toBottomOf="@+id/text_level_2" />
+
+    <TextView
+        android:id="@+id/text_level_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/menu.text.add_subs_mult_div"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/btn_level_2"
+        app:layout_constraintTop_toBottomOf="@+id/btn_level_2" />
+
+    <Button
+        android:id="@+id/btn_level_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/menu.btn.level_3"
+        app:layout_constraintStart_toStartOf="@+id/text_level_3"
+        app:layout_constraintTop_toBottomOf="@+id/text_level_3" />
+
+    <TextView
+        android:id="@+id/text_chose_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/menu.text.chose_operation"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/text_chose_difficult"
+        app:layout_constraintTop_toBottomOf="@+id/btn_level_3" />
+
+    <Spinner
+        android:id="@+id/spinner_operation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:entries="@array/operations"
+        app:layout_constraintStart_toStartOf="@+id/btn_level_3"
+        app:layout_constraintTop_toBottomOf="@+id/text_chose_level" />
+
+    <Button
+        android:id="@+id/btn_begin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/menu.btn.begin_operation"
+        app:layout_constraintStart_toStartOf="@+id/spinner_operation"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_operation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

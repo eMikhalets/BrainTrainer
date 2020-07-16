@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/menuFragment">
+
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.supercasual.braintrainer.ui.menu.MenuFragment"
+        android:label="MenuFragment"
+        tools:layout="@layout/fragment_menu">
+        <action
+            android:id="@+id/action_menuFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.supercasual.braintrainer.ui.game.GameFragment"
+        android:label="GameFragment"
+        tools:layout="@layout/fragment_game">
+        <action
+            android:id="@+id/action_gameFragment_to_endGameFragment"
+            app:destination="@id/endGameFragment"
+            app:popUpTo="@id/gameFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/endGameFragment"
+        android:name="com.supercasual.braintrainer.ui.endgame.EndGameFragment"
+        android:label="EndGameFragment"
+        tools:layout="@layout/fragment_end_game" />
+</navigation>
