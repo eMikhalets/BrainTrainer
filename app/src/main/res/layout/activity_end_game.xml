@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".EndGameActivity">
+
+    <TextView
+        android:id="@+id/text_endGame_currentScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Текущий результат: 2" />
+
+    <TextView
+        android:id="@+id/text_endGame_maxScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Лучший результат: 5338573" />
+
+    <Button
+        android:id="@+id/btn_endGame_restart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Начать заново" />
+</LinearLayout>
