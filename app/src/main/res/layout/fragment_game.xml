@@ -27,12 +27,26 @@
         tools:text="00:20" />
 
     <TextView
+        android:id="@+id/text_prepare_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="100sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btn_answer_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_answers"
+        tools:text="3" />
+
+    <TextView
         android:id="@+id/text_example"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:textSize="60sp"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/btn_answer_1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

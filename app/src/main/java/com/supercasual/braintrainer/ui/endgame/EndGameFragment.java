@@ -10,7 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.supercasual.braintrainer.R;
 import com.supercasual.braintrainer.databinding.FragmentEndGameBinding;
+import com.supercasual.braintrainer.utils.Const;
 
 public class EndGameFragment extends Fragment {
 
@@ -29,12 +31,21 @@ public class EndGameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initButtonsListeners();
+        setGameResults();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         binding = null;
+    }
+
+    private void setGameResults() {
+        Bundle args = getArguments();
+        if (args != null) {
+            binding.textRightAnswers.setText(getString(R.string.end_game_text_right_answers,
+                    args.getInt(Const.ARGS_ANSWERS)));
+        }
     }
 
     private void initButtonsListeners() {

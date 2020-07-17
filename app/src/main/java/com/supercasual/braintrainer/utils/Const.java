@@ -13,6 +13,8 @@ public class Const {
 
     public static final String ARGS_GAME_MODE = "args_game_mode";
 
+    public static final String ARGS_ANSWERS = "args_answers";
+
     // Game duration in mills
-    public static final int START_TIMER = 5000;
+    public static final int START_TIMER = 30000;
 }
