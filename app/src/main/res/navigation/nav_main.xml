@@ -23,7 +23,7 @@
         <action
             android:id="@+id/action_gameFragment_to_endGameFragment"
             app:destination="@id/endGameFragment"
-            app:popUpTo="@id/gameFragment" />
+            app:popUpTo="@id/menuFragment" />
     </fragment>
 
     <fragment

@@ -11,6 +11,8 @@ public class Const {
     public static final String MULTIPLICATION = "operation_multiplication";
     public static final String DIVISION = "operation_division";
 
-    public static final String ARGS_LEVEL = "args_level";
-    public static final String ARGS_OPERATION = "args_operation";
+    public static final String ARGS_GAME_MODE = "args_game_mode";
+
+    // Game duration in mills
+    public static final int START_TIMER = 5000;
 }

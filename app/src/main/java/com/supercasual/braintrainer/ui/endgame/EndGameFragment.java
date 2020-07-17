@@ -12,7 +12,7 @@ import androidx.navigation.Navigation;
 
 import com.supercasual.braintrainer.databinding.FragmentEndGameBinding;
 
-class EndGameFragment extends Fragment {
+public class EndGameFragment extends Fragment {
 
     private FragmentEndGameBinding binding;
 

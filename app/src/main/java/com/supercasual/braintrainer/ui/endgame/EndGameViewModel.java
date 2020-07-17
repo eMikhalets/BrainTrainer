@@ -2,5 +2,8 @@ package com.supercasual.braintrainer.ui.endgame;
 
 import androidx.lifecycle.ViewModel;
 
-class EndGameViewModel extends ViewModel {
+public class EndGameViewModel extends ViewModel {
+
+    public EndGameViewModel() {
+    }
 }

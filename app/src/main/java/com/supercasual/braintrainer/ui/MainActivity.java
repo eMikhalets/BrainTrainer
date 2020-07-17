@@ -4,7 +4,10 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.supercasual.braintrainer.BuildConfig;
 import com.supercasual.braintrainer.databinding.ActivityMainBinding;
+
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//
+
+        if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
+
 //        textAnswers = findViewById(R.id.main_text_answers);
 //        textTimer = findViewById(R.id.main_text_timer);
 //        textExample = findViewById(R.id.main_text_example);

@@ -8,14 +8,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.supercasual.braintrainer.R;
 import com.supercasual.braintrainer.databinding.FragmentMenuBinding;
 import com.supercasual.braintrainer.utils.Const;
 
+import timber.log.Timber;
+
 public class MenuFragment extends Fragment {
 
+    private MenuViewModel viewModel;
     private FragmentMenuBinding binding;
 
     @Nullable
@@ -30,7 +34,9 @@ public class MenuFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(MenuViewModel.class);
         initButtonsListeners();
+        Timber.d("Menu fragment created");
     }
 
     @Override
@@ -41,29 +47,35 @@ public class MenuFragment extends Fragment {
 
     private void initButtonsListeners() {
         binding.btnLevel1.setOnClickListener(view -> {
+            Timber.d("Selected Level 1");
             Bundle args = new Bundle();
-            args.putString(Const.ARGS_LEVEL, Const.LEVEL_1);
+            args.putString(Const.ARGS_GAME_MODE, Const.LEVEL_1);
             Navigation.findNavController(binding.getRoot())
                     .navigate(R.id.action_menuFragment_to_gameFragment, args);
         });
         binding.btnLevel2.setOnClickListener(view -> {
+            Timber.d("Selected Level 2");
             Bundle args = new Bundle();
-            args.putString(Const.ARGS_LEVEL, Const.LEVEL_2);
+            args.putString(Const.ARGS_GAME_MODE, Const.LEVEL_2);
             Navigation.findNavController(binding.getRoot())
                     .navigate(R.id.action_menuFragment_to_gameFragment, args);
         });
         binding.btnLevel3.setOnClickListener(view -> {
+            Timber.d("Selected Level 3");
             Bundle args = new Bundle();
-            args.putString(Const.ARGS_LEVEL, Const.LEVEL_3);
+            args.putString(Const.ARGS_GAME_MODE, Const.LEVEL_3);
             Navigation.findNavController(binding.getRoot())
                     .navigate(R.id.action_menuFragment_to_gameFragment, args);
         });
         binding.btnBegin.setOnClickListener(view -> {
             Bundle args = new Bundle();
             String operation = binding.spinnerOperation.getSelectedItem().toString();
-            args.putString(Const.ARGS_LEVEL, operation);
+            Timber.d("Selected operation %s", operation);
+            args.putString(Const.ARGS_GAME_MODE, operation);
             Navigation.findNavController(binding.getRoot())
                     .navigate(R.id.action_menuFragment_to_gameFragment, args);
         });
+
+        Timber.d("Menu button's listeners init");
     }
 }
