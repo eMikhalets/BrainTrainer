@@ -20,7 +20,6 @@ import com.supercasual.braintrainer.utils.Const;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import timber.log.Timber;
 
@@ -46,8 +45,6 @@ public class GameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(GameViewModel.class);
-        Timber.d("Game fragment created");
-
         prepareGame();
     }
 
@@ -83,11 +80,15 @@ public class GameFragment extends Fragment {
 
         // Init and start prepare game timer
         Timber.d("Prepare timer started.");
-        new CountDownTimer(3000, 1000) {
+        new CountDownTimer(3000, 500) {
             @Override
             public void onTick(long l) {
-                binding.textPrepareGame.setText(String.valueOf(l / 1000));
-                Timber.d("Prepare timer: %d sec left.", l / 1000);
+                long leftRemain = (l / 100) % 10;
+                if (leftRemain > 7) {
+                    long timeLeft = l / 1000 + 1;
+                    binding.textPrepareGame.setText(String.valueOf(timeLeft));
+                    Timber.d("Prepare timer: %d sec left.", timeLeft);
+                }
             }
 
             @Override
@@ -98,21 +99,24 @@ public class GameFragment extends Fragment {
         }.start();
 
         // Init game timer
-        gameTimer = new CountDownTimer(Const.START_TIMER, 1000) {
+        gameTimer = new CountDownTimer(Const.START_TIMER, 500) {
             @Override
             public void onTick(long l) {
-                // Update Game timer text
-                String seconds = "";
-                if (l > 10000) seconds = String.valueOf(l / 1000);
-                else seconds = "0" + l / 1000;
-                binding.textTimer.setText(getString(R.string.game_text_timer,
-                        "00", seconds));
-                Timber.d("Game timer: %s sec left", seconds);
+                long leftRemain = (l / 100) % 10;
+                if (leftRemain > 7) {
+                    String seconds = "";
+                    long timeLeft = l / 1000 + 1;
+                    if (timeLeft >= 10) seconds = String.valueOf(timeLeft);
+                    else seconds = "0" + timeLeft;
+                    binding.textTimer.setText(getString(R.string.game_text_timer,
+                            "00", seconds));
+                    Timber.d("Game timer: %s sec left", seconds);
+                }
             }
 
             @Override
             public void onFinish() {
-                Timber.d("Prepare timer finished.");
+                Timber.d("Game timer finished.");
                 endGame();
             }
         };
@@ -122,6 +126,7 @@ public class GameFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             gameMode = args.getString(Const.ARGS_GAME_MODE, Const.LEVEL_1);
+            viewModel.setGameMode(gameMode);
         }
     }
 
@@ -134,12 +139,18 @@ public class GameFragment extends Fragment {
     }
 
     private void updateExample() {
-        generateExample();
+        viewModel.generateExample();
         binding.textExample.setText(getString(R.string.game_text_example,
                 String.valueOf(viewModel.getFirstOperand()),
                 viewModel.getOperation(),
                 String.valueOf(viewModel.getSecondOperand())));
-        generateAnswers();
+
+        // Set text to buttons
+        Collections.shuffle(buttonList);
+        for (int i = 0; i < buttonList.size() - 1; i++) {
+            buttonList.get(i).setText(String.valueOf(viewModel.getFakeResults().get(i)));
+        }
+        buttonList.get(3).setText(String.valueOf(viewModel.getResult()));
     }
 
     private void endGame() {
@@ -151,6 +162,8 @@ public class GameFragment extends Fragment {
     }
 
     private void checkAnswer(String answer) {
+        for (Button button : buttonList) button.setEnabled(false);
+
         if (Integer.parseInt(answer) == viewModel.getResult()) {
             viewModel.increaseAnswers();
         } else {
@@ -160,57 +173,7 @@ public class GameFragment extends Fragment {
         binding.textAnswers.setText(getString(R.string.game_text_answers,
                 viewModel.getAnswers(), viewModel.getMistakes()));
         updateExample();
-    }
 
-    private void generateExample() {
-        switch (gameMode) {
-            case Const.LEVEL_1:
-                Timber.d("Selected mode is LEVEL 1");
-                viewModel.generateLevel(0);
-                break;
-            case Const.LEVEL_2:
-                Timber.d("Selected mode is LEVEL 2");
-                viewModel.generateLevel(1);
-                break;
-            case Const.LEVEL_3:
-                Timber.d("Selected mode is LEVEL 3");
-                viewModel.generateLevel(3);
-                break;
-            case Const.ADDITION:
-                Timber.d("Selected mode is ADDITION");
-                viewModel.generateOperation(0);
-                break;
-            case Const.SUBTRACTION:
-                Timber.d("Selected mode is SUBTRACTION");
-                viewModel.generateOperation(1);
-                break;
-            case Const.MULTIPLICATION:
-                Timber.d("Selected mode is MULTIPLICATION");
-                viewModel.generateOperation(2);
-                break;
-            case Const.DIVISION:
-                Timber.d("Selected mode is DIVISION");
-                viewModel.generateOperation(3);
-                break;
-        }
-    }
-
-    private void generateAnswers() {
-        Random random = new Random();
-        List<Integer> answers = new ArrayList<>();
-        answers.add(viewModel.getResult());
-        for (int i = 1; i < 4; i++) {
-            int num = 0;
-            boolean isContains = true;
-            while (isContains) {
-                num = random.nextInt(150);
-                isContains = answers.contains(num);
-            }
-            answers.add(num);
-        }
-        Collections.shuffle(answers);
-        for (int i = 0; i < buttonList.size(); i++) {
-            buttonList.get(i).setText(String.valueOf(answers.get(i)));
-        }
+        for (Button button : buttonList) button.setEnabled(true);
     }
 }
