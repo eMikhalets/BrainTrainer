@@ -1,5 +1,6 @@
 package com.supercasual.braintrainer.ui.game;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -25,10 +26,11 @@ import timber.log.Timber;
 
 public class GameFragment extends Fragment {
 
+    private CountDownTimer gameTimer;
+    private CountDownTimer prepareTimer;
     private List<Button> buttonList;
     private GameViewModel viewModel;
     private FragmentGameBinding binding;
-    private CountDownTimer gameTimer;
 
     private String gameMode;
 
@@ -45,14 +47,27 @@ public class GameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(GameViewModel.class);
+        setGameViewsPosition();
         prepareGame();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        prepareTimer.cancel();
+        gameTimer.cancel();
+        Timber.d("Timer canceled");
         binding = null;
         buttonList = null;
+    }
+
+    private void setGameViewsPosition() {
+        binding.textAnswers.setTranslationY(-100f);
+        binding.textTimer.setTranslationY(-100f);
+        binding.btnAnswer1.setTranslationX(-800f);
+        binding.btnAnswer2.setTranslationX(800f);
+        binding.btnAnswer3.setTranslationX(-500f);
+        binding.btnAnswer4.setTranslationX(500f);
     }
 
     private void prepareGame() {
@@ -61,7 +76,7 @@ public class GameFragment extends Fragment {
         // Init text answer and mistakes
         binding.textAnswers.setText(getString(R.string.game_text_answers, 0, 0));
         // Init text timer
-        String seconds = "";
+        String seconds;
         if (Const.START_TIMER > 10000) seconds = String.valueOf(Const.START_TIMER / 1000);
         else seconds = "0" + Const.START_TIMER / 1000;
         binding.textTimer.setText(getString(R.string.game_text_timer, "00", seconds));
@@ -73,6 +88,8 @@ public class GameFragment extends Fragment {
         buttonList.add(binding.btnAnswer3);
         buttonList.add(binding.btnAnswer4);
 
+        for (Button button : buttonList) button.setEnabled(false);
+
         // Set click listeners
         for (Button button : buttonList) {
             button.setOnClickListener(view -> checkAnswer(button.getText().toString()));
@@ -80,7 +97,7 @@ public class GameFragment extends Fragment {
 
         // Init and start prepare game timer
         Timber.d("Prepare timer started.");
-        new CountDownTimer(3000, 500) {
+        prepareTimer = new CountDownTimer(3000, 500) {
             @Override
             public void onTick(long l) {
                 long leftRemain = (l / 100) % 10;
@@ -96,7 +113,8 @@ public class GameFragment extends Fragment {
                 Timber.d("Prepare timer finished.");
                 startGame();
             }
-        }.start();
+        };
+        prepareTimer.start();
 
         // Init game timer
         gameTimer = new CountDownTimer(Const.START_TIMER, 500) {
@@ -104,7 +122,7 @@ public class GameFragment extends Fragment {
             public void onTick(long l) {
                 long leftRemain = (l / 100) % 10;
                 if (leftRemain > 7) {
-                    String seconds = "";
+                    String seconds;
                     long timeLeft = l / 1000 + 1;
                     if (timeLeft >= 10) seconds = String.valueOf(timeLeft);
                     else seconds = "0" + timeLeft;
@@ -126,16 +144,27 @@ public class GameFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             gameMode = args.getString(Const.ARGS_GAME_MODE, Const.LEVEL_1);
+            Timber.d("Game mode is %s", gameMode);
             viewModel.setGameMode(gameMode);
         }
     }
 
     private void startGame() {
-        binding.textPrepareGame.setVisibility(View.INVISIBLE);
+        animateGameViews();
+        binding.textPrepareGame.animate().alpha(0).setDuration(300).start();
         gameTimer.start();
         updateExample();
-        binding.textExample.setVisibility(View.VISIBLE);
+        binding.textExample.animate().alpha(1).setDuration(300).start();
         Timber.d("Game timer started.");
+    }
+
+    private void animateGameViews() {
+        binding.textAnswers.animate().translationY(0f).start();
+        binding.textTimer.animate().translationY(0f).start();
+        binding.btnAnswer1.animate().translationX(0f).start();
+        binding.btnAnswer2.animate().translationX(0f).start();
+        binding.btnAnswer3.animate().translationX(0f).start();
+        binding.btnAnswer4.animate().translationX(0f).start();
     }
 
     private void updateExample() {
@@ -151,6 +180,7 @@ public class GameFragment extends Fragment {
             buttonList.get(i).setText(String.valueOf(viewModel.getFakeResults().get(i)));
         }
         buttonList.get(3).setText(String.valueOf(viewModel.getResult()));
+        for (Button button : buttonList) button.setEnabled(true);
     }
 
     private void endGame() {
@@ -173,7 +203,5 @@ public class GameFragment extends Fragment {
         binding.textAnswers.setText(getString(R.string.game_text_answers,
                 viewModel.getAnswers(), viewModel.getMistakes()));
         updateExample();
-
-        for (Button button : buttonList) button.setEnabled(true);
     }
 }

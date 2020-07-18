@@ -69,7 +69,8 @@ public class MenuFragment extends Fragment {
         });
         binding.btnBegin.setOnClickListener(view -> {
             Bundle args = new Bundle();
-            String operation = binding.spinnerOperation.getSelectedItem().toString();
+            String operation = viewModel.getGameMode(
+                    binding.spinnerOperation.getSelectedItem().toString());
             Timber.d("Selected operation %s", operation);
             args.putString(Const.ARGS_GAME_MODE, operation);
             Navigation.findNavController(binding.getRoot())
